@@ -4,6 +4,10 @@
 
 [디자인패턴 공부내용 정리 : 빌더 패턴](https://semtax.tistory.com/m/85)
 
+[[디자인 패턴 4편] 생성 패턴, 빌더 (Builder)](https://dailyheumsi.tistory.com/187)
+
+[빌더 패턴(Builder Pattern)](https://jdm.kr/blog/217)
+
 ## GoF Builder Pattern
 새로운 객체를 만드는 방법론이라는 점은 Java의 빌더 패턴과 같지만, 전혀 관점이 다르다. Java의 빌더 패턴은 Set 함수를 여러개 써서 내가 원하는 변수를 세팅하고, `Build()` 후에는 멤버변수를 수정할 수 없게 해서 안전하게 보호하는 데에 목적이 있다. 반면 GoF의 빌더 패턴은 객체지향적인 방식인데, 예시를 통해 설명하겠다.
 
@@ -343,10 +347,126 @@ public class AppMain : MonoBehaviour
         GitHubService service = retrofit.create(GitHubService.class);
         ```
 
+---
 
+1. 개념
 
+    > 빌더 패턴은 생성 인자가 많을 때, 빌더 객체를 통해 구체적인 객체를 생성한다.
+  
+  1. 장점
 
+    - 객체 생성에 필요한 파라미터의 의미를 코드단에서 명확히 알 수 있다(가독성).
+    - 생성에 필요한 파라미터가 추가될 때마다 생성자 오버로딩을 안해도 된다.
 
+  2. 단점
 
+    - 추가적으로 빌더 클래스를 구현해야 한다.
+
+  3. 활용 상황
+
+      생성자 인자가 많은 경우
+
+      ```java
+      WebBrowser browser = new WebBrowser();
+      browser.setSslEnabled(true);
+      browser.setPlugins(new FlashPlugin());
+      browser.setCookieEnabled(true);
+      ```
+     
+      ```java
+      WebBrowser browser = new BrowserBuilder()
+          .withSsl()
+          .withFlashPlugin()
+          .withCookieSupport()
+          .build();
+      ```
+
+2. 구조 & 코드
+
+- 불필요한 생성자를 만들지 않고 객체를 만든다.
+- 데이터의 순서에 상관 없이 객체를 만들어 낸다.
+- 사용자가 봤을때 명시적이고 이해할 수 있어야 한다.
+
+```java
+
+```
+
+```java
+public class PersonInfoBuilder {
+  private String name;
+  private Integer age;
+  private String favoriteColor;
+  private String favoriteAnimal;
+  private Integer favoriteNumber;
+
+  public PersonInfoBuilder setName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public PersonInfoBuilder setAge(Integer age) {
+    this.age = age;
+    return this;
+  }
+
+  public PersonInfoBuilder setFavoriteColor(String favoriteColor) {
+    this.favoriteColor = favoriteColor;
+    return this;
+  }
+
+  public PersonInfoBuilder setFavoriteAnimal(String favoriteAnimal) {
+    this.favoriteAnimal = favoriteAnimal;
+    return this;
+  }
+
+  public PersonInfoBuilder setFavoriteNumber(Integer favoriteNumber) {
+    this.favoriteNumber = favoriteNumber;
+    return this;
+  }
+
+  public PersonInfo build(){
+    PersonInfo personInfo = new PersonInfo(name, age, favoriteColor, favoriteAnimal, favoriteNumber);
+    return personInfo;
+  }
+}
+```
+
+```java
+
+public class BuilderPattern {
+  public static void main(String[] args) {
+    // 빌더 객체를 하나 만듭니다.
+    PersonInfoBuilder personInfoBuilder = new PersonInfoBuilder();
+    // 빌더 객체에 원하는 데이터를 입력합니다. 순서는 상관 없습니다.
+    PersonInfo result = personInfoBuilder
+            .setName("MISTAKE")
+            .setAge(20)
+            .setFavoriteAnimal("cat")
+            .setFavoriteColor("black")
+            .setName("JDM") // 다시 같은 메소드를 호출한다면 나중에 호출한 값이 들어갑니다.
+            .setFavoriteNumber(7)
+            // 마지막에 .build() 메소드를 호출해서 최종적인 결과물을 만들어 반환합니다.
+            .build();
+    // print is "name:JDM, age:20, favoriteColor:black, favoriteAnimal:cat, favoriteNumber:7"
+    System.out.println(result.getPersonInfo());
+  }
+}
+```
+
+1. `setter`의 리턴값으로 `this`를 써서 활용하는 입장에서는 체임 형식으로 메서드를 호출할 수 있게 했다.
+2. `build`로 최종적으로 `builder`에 담긴 정보를 이용해 객체를 만든다.
+
+- 빌더 클래스를 객체를 만들어낼 클래스와 꼭 분리할 필요는 없다. 객체를 만들어낼 클래스 내부에 빌더 클래스를 포함해서 다음과 같이 만들 수 있다.
+
+  ```java
+  PersonInfo p = PersonInfo.Builder().setName("JDM").setAge(20).build();
+  ```
+  
+  ```java
+  /* PersionInfo.java */
+  public static PersonInfoBuilder Builder(){
+    return new PersonInfoBuilder();
+  }
+  ```
 
 
