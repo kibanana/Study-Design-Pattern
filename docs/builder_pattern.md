@@ -2,6 +2,7 @@
 
 [유니티 디자인패턴 - 빌더(Java와 GoF의 차이점) (Unity Design Patterns - Builder)](https://glikmakesworld.tistory.com/m/9)
 
+[디자인패턴 공부내용 정리 : 빌더 패턴](https://semtax.tistory.com/m/85)
 
 ## GoF Builder Pattern
 새로운 객체를 만드는 방법론이라는 점은 Java의 빌더 패턴과 같지만, 전혀 관점이 다르다. Java의 빌더 패턴은 Set 함수를 여러개 써서 내가 원하는 변수를 세팅하고, `Build()` 후에는 멤버변수를 수정할 수 없게 해서 안전하게 보호하는 데에 목적이 있다. 반면 GoF의 빌더 패턴은 객체지향적인 방식인데, 예시를 통해 설명하겠다.
@@ -199,3 +200,153 @@ public class AppMain : MonoBehaviour
     }
 }
 ```
+
+---
+
+빌더 패턴 - 생성 패턴 중 하나
+
+- 배경
+    
+    복잡한 객체를 생성하는데 초기화를 단계별로 해야할 때, 어떻게 깔끔하게 코드를 작성할 수 있을까를 고민하다 나온 패턴
+    
+    ex) 자동차 조립, 피자 만들기
+
+- 상황
+  
+    피자라는 객체를 만든다고 가정해보자. 피자에는 올리브 토핑, 페퍼로니 토핑, 피망, 고기도 들어갈 수 있다. 하지만 저 재료들을 무조건 넣어야하는 게 아니고 선택적으로 넣는다.
+
+    일단 가장 단순한 방법은 이런 케이스를 모두 커버하는 생성자를 만드는 것이다. 그럼 코드가 상당히 지저분하게 나온다.
+
+    ```java
+    public class Pizza {
+          private String pepperoni;
+          private String paprika;
+          private String meat;
+          private String olive;
+          private String cheese;
+          private String bread;
+        
+          public Pizza() {
+        
+          }
+        
+          public Pizza(String bread) {
+            this.bread = bread;
+          }
+        
+          public Pizza(String bread, String cheese) {
+            this.bread = bread;
+            this.cheese = cheese;
+          }
+        
+          ...
+    }
+    ```
+
+- 해결법
+  
+    위에서 선언했던 모든 생성자들을 빌더라는 별도 클래스로 추출한다.
+
+    그리고 추출한 각 생성자들을 빌더 클래스의 메서드로 만든다. 이 때, 빌더 클래스의 메서드들이 빌더 객체 자신을 리턴하게 해서 위에서 선언한 함수들을 연속적으로 호출할 수 있게 하는 방식으로 구현한다.
+
+    마지막으로 `build` 메서드를 호출하면 실제로 빌더 클래스가 생성한 객체를 돌려준다.
+
+- 구현법
+  
+    ```java
+    public class Pizza {
+    
+          private String pepperoni;
+          private String paprika;
+          private String meat;
+          private String olive;
+          private String cheese;
+          private String bread;
+        
+          public Pizza(String bread, String cheese, String pepperoni, String paprika, String meat, String olive) {
+                this.bread = bread;
+                this.cheese = cheese;
+                this.pepperoni = pepperoni;
+                this.paprika = paprika;
+                this.meat = meat;
+                this.olive = olive;
+          }
+    }
+    ```
+
+    ```java
+    public class PizzaBuilder {
+
+          private String pepperoni;
+          private String paprika;
+          private String meat;
+          private String olive;
+          private String cheese;
+          private String bread;
+        
+          public PizzaBuilder(String bread, String cheese) {
+                this.bread = bread;
+                this.cheese = cheese;
+          }
+        
+          public PizzaBuilder addPaprika(String paprika) {
+                this.paprika = paprika;
+          }
+        
+        
+          public PizzaBuilder addMeat(String meat) {
+                this.meat = meat;
+          }
+        
+          public PizzaBuilder addOlive(String olive) {
+                this.olive = olive;
+          }
+        
+          public PizzaBuilder addPepperoni(String pepperoni) {
+                this.pepperoni = pepperoni;
+          }
+        
+          public Pizza build(){
+                return new Pizza(this.bread, this.cheese, this.pepperoni, this.paprika, this.meat, this.olive);
+          }
+    }
+    ```
+    
+    ```java
+    public class Main {
+          public static void main(String[] args) {
+                PizzaBuilder builder = new PizzaBuilder("crust","pamasan");
+                Pizza nicePizza = builder.addPaprika("yellow paprika")
+                      .addMeat("cow meat")
+                      .addOlive("black olive")
+                      .addPepperoni("red pepperoni")
+                      .build();
+          }
+    }
+    ```
+
+- 예시
+    - `Retrofit2` [Github](https://square.github.io/retrofit/)
+
+        ```java
+        public interface GitHubService {
+              @GET("users/{user}/repos")
+              Call<List<Repo>> listRepos(@Path("user") String user);
+        }
+            
+        ...
+        
+        Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .build();
+        
+        GitHubService service = retrofit.create(GitHubService.class);
+        ```
+
+
+
+
+
+
+
+
