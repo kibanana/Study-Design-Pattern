@@ -2,6 +2,8 @@
 
 [유니티 디자인패턴 - 빌더(Java와 GoF의 차이점) (Unity Design Patterns - Builder)](https://glikmakesworld.tistory.com/m/9)
 
+[[GoF 디자인 패턴] 2. 빌더 패턴](https://medium.com/@sangw0804/gof-%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4-2-%EB%B9%8C%EB%8D%94-%ED%8C%A8%ED%84%B4-3c56dc766d3b)
+
 [디자인패턴 공부내용 정리 : 빌더 패턴](https://semtax.tistory.com/m/85)
 
 [[디자인 패턴 4편] 생성 패턴, 빌더 (Builder)](https://dailyheumsi.tistory.com/187)
@@ -135,6 +137,99 @@ public class AppMain : MonoBehaviour
     }
 }
 ```
+
+---
+
+GoF 빌더 패턴의 정의는 다음과 같다. '복잡한 객체를 생성하는 방법과 표현하는 방법을 정의하는 클래스를 분리해서 서로 다른 표현이라도 이를 생성할 수 있는 동일한 절차를 제공한다'
+
+'표현'은 '조립'이라는 의미로 생각하면 이해하기 편할 듯 하다.
+
+- 클래스 다이어그램
+
+    ![img.png](builderPattern.png)
+
+빌더 패턴의 클래스 구조는 상당히 심플하다. 복합 객체(`Product` 객체)의 표현(조립)을 담당하는 `Director` 클래스는 내부적으로 `Builder` 인터페이스의 구현체 객체를 포함하고 있고, `Builder` 구현체 클래스가 복합 객체의 각 구성요소의 생산을 담당한다.
+
+```java
+// Client.java
+
+public class Client {
+    public static void main(String[] args) {
+        Director director = new Director(new ModernHouseBuilder());
+
+        House house =  director.construct();
+    }
+}
+```
+
+```java
+// Director.java
+
+
+public class Director {
+    private HouseBuilder builder;
+
+    public Director(HouseBuilder builder) {
+        this.builder = builder;
+    }
+
+    House construct() {
+        builder.buildRoom(1);
+        builder.buildRoom(2);
+
+        builder.buildDoor(1, 2);
+
+        return builder.getHouse();
+    }
+}
+```
+
+```java
+// HouseBuilder.java
+
+public interface HouseBuilder {
+    void buildRoom(int roomNumber);
+    void buildDoor(int oneRoomNumber, int theOtherRoomNumber);
+    House getHouse();
+}
+```
+
+```java
+// ModernHouseBuilder.java
+
+public class ModernHouseBuilder implements HouseBuilder {
+    private House house = new House();
+
+    @Override
+    public void buildRoom(int roomNumber) {
+        house.addRoom(roomNumber);
+    }
+
+    @Override
+    public void buildDoor(int oneRoomNumber, int theOtherRoomNumber) {
+        if (house.hasRoom(oneRoomNumber) && house.hasRoom(theOtherRoomNumber)) {
+            house.addDoor(oneRoomNumber, theOtherRoomNumber);
+        }
+    }
+
+    @Override
+    public House getHouse() {
+        return house;
+    }
+}
+```
+
+```java
+
+```
+
+위 코드를 보면 부품 생산 역할을 담당하는 `Builder` 클래스와 생산된 부품들을 얼마나, 어떻게 서로 표현(조립)할것인지를 담당하는 `Director` 클래스가 구분되어 있다. 이를 통해 `Builder` 내부 코드를 추상화하여 변경이 용이하고, 복잡한 객체를 생성하는 단계를 세밀하게 나누어서 다룰 수 있게 해준다.
+
+Effective Java의 빌더 패턴을 사용하면 다음과 같은 장점을 얻을 수 있다.
+
+1. 각 인자의 의미가 분명해지고
+2. `.build()` 메소드 실행시에 한번에 객체가 생성되므로 일관성이 유지되고
+3. setter 메소드를 추가하거나 할 필요가 없다.
 
 ## Effective Java Builder Pattern
 
