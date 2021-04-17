@@ -13,5 +13,9 @@ public class Main {
         machine.setJuiceBuilder(grapeJuiceBuilder);
         machine.makeJuice();
         System.out.println(machine.getJuice().getType());
+
+        machine.setJuiceBuilder(lemonJuiceBuilder);
+        machine.makeJuice();
+        System.out.println(machine.getJuice().getType());
     }
 }

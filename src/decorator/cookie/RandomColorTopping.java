@@ -6,7 +6,7 @@ import java.util.Random;
 public class RandomColorTopping extends Topping {
     public RandomColorTopping(Cookie cookie) {
         super(cookie);
-        cookie.setName(randomColor() + " " + cookie.getName());
+        cookie.setName("♥" + randomColor() + "♥ " + cookie.getName());
     }
 
     public enum ColorType {
