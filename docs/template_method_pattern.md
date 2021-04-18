@@ -1,5 +1,7 @@
 # Template Method Pattern
 
+> prepareOther 메서드가 훅 메서드(= 훅 연산, 필요하다면 서브클래스에서 확장할 수 있는 기본적인 행동을 제공하는 메서드)다. 그리고 personWantsOther 메서드는 훅 메서드를 후킹하는 역할만 한다.
+
 [템플릿 메소드 패턴 (Template Method Pattern)](https://johngrib.github.io/wiki/template-method-pattern/)
 
 [템플릿 메소드 패턴(Template Method Pattern)](https://jdm.kr/blog/116)
@@ -100,11 +102,11 @@ public abstract class CoffeineBeverage {
     abstract void brew(); // 서브클래스에서 구현
     abstract void addCondiments(); // 서브클래스에서 구현
 
-    void boilWater() {
+    protected void boilWater() {
         System.out.println("물 끓이기");
     }
 
-    void pourInCup() {
+    protected void pourInCup() {
         System.out.println("컵에 따르기");
     }
 }
@@ -170,6 +172,8 @@ public abstract class CoffeineBeverage {
 ## 람다를 이용해 서브 클래스 제거하기 [Link](http://www.javamagazine.mozaicreader.com/NovDec2016/LinkedIn#&pageSet=57&page=0)
 
 1개의 추상 메소드를 사용하는 템플릿 메소드가 있다. 이 코드를 사용하려면 서브 클래스를 작성해야 한다.
+
+(<https://tourspace.tistory.com/6>)
 
 ```java
 abstract class OnlineBanking {

@@ -14,11 +14,11 @@ public abstract class CoffeineBeverage {
     abstract void brew(); // 서브클래스에서 구현
     abstract void addCondiments(); // 서브클래스에서 구현
 
-    void boilWater() {
+    protected void boilWater() {
         System.out.println("물 끓이기");
     }
 
-    void pourInCup() {
+    protected void pourInCup() {
         System.out.println("컵에 따르기");
     }
 
