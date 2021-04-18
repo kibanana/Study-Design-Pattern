@@ -8,7 +8,7 @@ public abstract class JuiceBuilder { // Builder
     }
 
     public void prepareNewJuice() {
-        this.juice = new Juice();
+        this.juice = new Juice(); // 객체의 생성
     }
 
     public abstract void setFruit();

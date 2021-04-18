@@ -10,7 +10,24 @@
 
 [빌더 패턴(Builder Pattern)](https://jdm.kr/blog/217)
 
+[빌더 패턴(Builder Pattern)](https://johngrib.github.io/wiki/builder-pattern/#gof-%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4%EC%9D%98-%EB%B9%8C%EB%8D%94-%ED%8C%A8%ED%84%B4)
+
 ## GoF Builder Pattern
+> 객체의 생성 방법과 표현 방법을 분리한다
+
+> Separate the construction of a complex object from its representation so that the same construction process can create different representations.  
+> 복잡한 객체를 생성하는 방법과 표현하는 방법을 정의하는 클래스를 별도로 분리하여 서로 다른 표현이라도 이를 생성할 수 있는 동일한 구축 공정을 제공할 수 있도록 한다.
+
+> 객체를 생성하는 방법과 객체를 표현하는 방법을 분리한다.
+
+- 참여 객체
+    - Builder: 빌더 인터페이스
+    - ConcreteBuilder: 빌더 인터페이스 구현체. 부품을 합성하는 방식에 따라 여러 구현체를 만든다.
+    - Director: Builder를 이용해 객체를 생성한다.
+    - Product: Director가 Builder로 만들어낸 결과물
+
+Builder는 부품을 만들고, Director는 Builder가 만든 부품을 조합해 제품을 만든다고 할 수 있다.
+
 새로운 객체를 만드는 방법론이라는 점은 Java의 빌더 패턴과 같지만, 전혀 관점이 다르다. Java의 빌더 패턴은 Set 함수를 여러개 써서 내가 원하는 변수를 세팅하고, `Build()` 후에는 멤버변수를 수정할 수 없게 해서 안전하게 보호하는 데에 목적이 있다. 반면 GoF의 빌더 패턴은 객체지향적인 방식인데, 예시를 통해 설명하겠다.
 
 생과일 주스를 만드는 타이쿤 게임이 있다고 해보자. 손님이 원하는대로 포도주스, 딸기주스를 만들어서 줘야 한다. 기계에 과일을 넣고, 버튼을 눌러 즙을 짜서 손님에게 주는 것은 동일하지만, 재료가 포도냐 딸기냐에 따라 다르다.
@@ -20,10 +37,10 @@
 
 |클래스명|설명|
 |---|---|
-|Juice|손님에게 줄 주스. 멤버변수 type에 따라 포도주스 혹은 딸기주스가 됨|
-|JuiceBuilder|주스 객체를 만들고 세팅하는데에 필요한 멤버함수나 멤버변수를 선언해주는 추상 클래스|
-|StrawberryJuiceBuilder, GrapeJuiceBuilder|JuiceBuilder를 상속받아 딸기주스 혹은 포도주스를 만드는 기능을 정의할 수 있는 실질적인 객체|
-|JuiceMachine|JuiceBuilder의 함수들을 사용해서 때로는 딸기주스 빌더, 때로는 포도|
+|Juice(Product)|손님에게 줄 주스. 멤버변수 type에 따라 포도주스 혹은 딸기주스가 됨|
+|JuiceBuilder(Builder)|주스 객체를 만들고 세팅하는데에 필요한 멤버함수나 멤버변수를 선언해주는 추상 클래스|
+|StrawberryJuiceBuilder, GrapeJuiceBuilder(Concrete Builder)|JuiceBuilder를 상속받아 딸기주스 혹은 포도주스를 만드는 기능을 정의할 수 있는 실질적인 객체|
+|JuiceMachine(Director)|JuiceBuilder의 함수들을 사용해서 때로는 딸기주스 빌더, 때로는 포도주스 빌더를 이용해 딸기주스와 포도주스를 만들어내는 과일가게의 주스기계|
 
 ```java
 public class Juice
@@ -217,10 +234,6 @@ public class ModernHouseBuilder implements HouseBuilder {
         return house;
     }
 }
-```
-
-```java
-
 ```
 
 위 코드를 보면 부품 생산 역할을 담당하는 `Builder` 클래스와 생산된 부품들을 얼마나, 어떻게 서로 표현(조립)할것인지를 담당하는 `Director` 클래스가 구분되어 있다. 이를 통해 `Builder` 내부 코드를 추상화하여 변경이 용이하고, 복잡한 객체를 생성하는 단계를 세밀하게 나누어서 다룰 수 있게 해준다.
@@ -450,12 +463,12 @@ public class AppMain : MonoBehaviour
   
   1. 장점
 
-    - 객체 생성에 필요한 파라미터의 의미를 코드단에서 명확히 알 수 있다(가독성).
-    - 생성에 필요한 파라미터가 추가될 때마다 생성자 오버로딩을 안해도 된다.
+        - 객체 생성에 필요한 파라미터의 의미를 코드단에서 명확히 알 수 있다(가독성).
+        - 생성에 필요한 파라미터가 추가될 때마다 생성자 오버로딩을 안해도 된다.
 
   2. 단점
 
-    - 추가적으로 빌더 클래스를 구현해야 한다.
+        - 추가적으로 빌더 클래스를 구현해야 한다.
 
   3. 활용 상황
 
@@ -478,90 +491,86 @@ public class AppMain : MonoBehaviour
 
 2. 구조 & 코드
 
-- 불필요한 생성자를 만들지 않고 객체를 만든다.
-- 데이터의 순서에 상관 없이 객체를 만들어 낸다.
-- 사용자가 봤을때 명시적이고 이해할 수 있어야 한다.
+    - 불필요한 생성자를 만들지 않고 객체를 만든다.
+    - 데이터의 순서에 상관 없이 객체를 만들어 낸다.
+    - 사용자가 봤을때 명시적이고 이해할 수 있어야 한다.
 
-```java
-
-```
-
-```java
-public class PersonInfoBuilder {
-  private String name;
-  private Integer age;
-  private String favoriteColor;
-  private String favoriteAnimal;
-  private Integer favoriteNumber;
-
-  public PersonInfoBuilder setName(String name) {
-    this.name = name;
-    return this;
-  }
-
-  public PersonInfoBuilder setAge(Integer age) {
-    this.age = age;
-    return this;
-  }
-
-  public PersonInfoBuilder setFavoriteColor(String favoriteColor) {
-    this.favoriteColor = favoriteColor;
-    return this;
-  }
-
-  public PersonInfoBuilder setFavoriteAnimal(String favoriteAnimal) {
-    this.favoriteAnimal = favoriteAnimal;
-    return this;
-  }
-
-  public PersonInfoBuilder setFavoriteNumber(Integer favoriteNumber) {
-    this.favoriteNumber = favoriteNumber;
-    return this;
-  }
-
-  public PersonInfo build(){
-    PersonInfo personInfo = new PersonInfo(name, age, favoriteColor, favoriteAnimal, favoriteNumber);
-    return personInfo;
-  }
-}
-```
-
-```java
-
-public class BuilderPattern {
-  public static void main(String[] args) {
-    // 빌더 객체를 하나 만듭니다.
-    PersonInfoBuilder personInfoBuilder = new PersonInfoBuilder();
-    // 빌더 객체에 원하는 데이터를 입력합니다. 순서는 상관 없습니다.
-    PersonInfo result = personInfoBuilder
-            .setName("MISTAKE")
-            .setAge(20)
-            .setFavoriteAnimal("cat")
-            .setFavoriteColor("black")
-            .setName("JDM") // 다시 같은 메소드를 호출한다면 나중에 호출한 값이 들어갑니다.
-            .setFavoriteNumber(7)
-            // 마지막에 .build() 메소드를 호출해서 최종적인 결과물을 만들어 반환합니다.
-            .build();
-    // print is "name:JDM, age:20, favoriteColor:black, favoriteAnimal:cat, favoriteNumber:7"
-    System.out.println(result.getPersonInfo());
-  }
-}
-```
-
-1. `setter`의 리턴값으로 `this`를 써서 활용하는 입장에서는 체임 형식으로 메서드를 호출할 수 있게 했다.
-2. `build`로 최종적으로 `builder`에 담긴 정보를 이용해 객체를 만든다.
-
-- 빌더 클래스를 객체를 만들어낼 클래스와 꼭 분리할 필요는 없다. 객체를 만들어낼 클래스 내부에 빌더 클래스를 포함해서 다음과 같이 만들 수 있다.
-
-  ```java
-  PersonInfo p = PersonInfo.Builder().setName("JDM").setAge(20).build();
-  ```
-  
-  ```java
-  /* PersionInfo.java */
-  public static PersonInfoBuilder Builder(){
-    return new PersonInfoBuilder();
-  }
-  ```
+    ```java
+    public class PersonInfoBuilder {
+      private String name;
+      private Integer age;
+      private String favoriteColor;
+      private String favoriteAnimal;
+      private Integer favoriteNumber;
+    
+      public PersonInfoBuilder setName(String name) {
+        this.name = name;
+        return this;
+      }
+    
+      public PersonInfoBuilder setAge(Integer age) {
+        this.age = age;
+        return this;
+      }
+    
+      public PersonInfoBuilder setFavoriteColor(String favoriteColor) {
+        this.favoriteColor = favoriteColor;
+        return this;
+      }
+    
+      public PersonInfoBuilder setFavoriteAnimal(String favoriteAnimal) {
+        this.favoriteAnimal = favoriteAnimal;
+        return this;
+      }
+    
+      public PersonInfoBuilder setFavoriteNumber(Integer favoriteNumber) {
+        this.favoriteNumber = favoriteNumber;
+        return this;
+      }
+    
+      public PersonInfo build(){
+        PersonInfo personInfo = new PersonInfo(name, age, favoriteColor, favoriteAnimal, favoriteNumber);
+        return personInfo;
+      }
+    }
+    ```
+    
+    ```java
+    
+    public class BuilderPattern {
+      public static void main(String[] args) {
+        // 빌더 객체를 하나 만듭니다.
+        PersonInfoBuilder personInfoBuilder = new PersonInfoBuilder();
+        // 빌더 객체에 원하는 데이터를 입력합니다. 순서는 상관 없습니다.
+        PersonInfo result = personInfoBuilder
+                .setName("MISTAKE")
+                .setAge(20)
+                .setFavoriteAnimal("cat")
+                .setFavoriteColor("black")
+                .setName("JDM") // 다시 같은 메소드를 호출한다면 나중에 호출한 값이 들어갑니다.
+                .setFavoriteNumber(7)
+                // 마지막에 .build() 메소드를 호출해서 최종적인 결과물을 만들어 반환합니다.
+                .build();
+        // print is "name:JDM, age:20, favoriteColor:black, favoriteAnimal:cat, favoriteNumber:7"
+        System.out.println(result.getPersonInfo());
+      }
+    }
+    ```
+    
+    1. `setter`의 리턴값으로 `this`를 써서 활용하는 입장에서는 체임 형식으로 메서드를 호출할 수 있게 했다.
+    2. `build`로 최종적으로 `builder`에 담긴 정보를 이용해 객체를 만든다.
+    
+    - 빌더 클래스를 객체를 만들어낼 클래스와 꼭 분리할 필요는 없다. 객체를 만들어낼 클래스 내부에 빌더 클래스를 포함해서 다음과 같이 만들 수 있다.
+    
+      ```java
+      PersonInfo p = PersonInfo.Builder().setName("JDM").setAge(20).build();
+      ```
+      
+      ```java
+      /* PersionInfo.java */
+      public static PersonInfoBuilder Builder(){
+        return new PersonInfoBuilder();
+      }
+      ```
 
 
