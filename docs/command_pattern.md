@@ -6,6 +6,25 @@
 
 [https://www.zerocho.com/category/JavaScript/post/57c667f2ee0b9e9043fed696](https://www.zerocho.com/category/JavaScript/post/57c667f2ee0b9e9043fed696)
 
+
+1. 수신자 Receiver
+
+    행동을 하는 객체 → 제어 장치(할 수 있는 행동이 여러개 담겨 있을 것) → 장치
+
+2. 커맨드 Command
+
+    수신자(Receiver)의 정보 + 행동이 들어 있는 객체 → 버튼의 행위
+
+3. 발동자 Invoker
+
+    커맨드를 저장함 → 버튼이 어떤 행동을 할지 설정해주는 행위
+
+4. 클라이언트 Client
+
+    커맨드 객체를 생성하고 발동자(Invoker)를 통해 수신자(Receiver)에게 할 행동을 전달함 → 리모컨
+
+---
+
 1. Command 패턴이란?
 
     > 커맨드 패턴(Command pattern)이란 요청을 객체의 형태로 **캡슐화**하여 사용자가 보낸 요청을 나중에 이용할 수 있도록 메서드 이름, 매개변수 등 요청에 필요한 정보를 저장 또는 로깅, 취소할 수 있게 하는 패턴
@@ -57,7 +76,7 @@
 
     - `CLight.h`
 
-        ```csharp
+        ```java
         class CLight {
         public:
             CLight(char *lightLoc);
@@ -74,7 +93,7 @@
 
     - `CLight.cpp`
 
-        ```csharp
+        ```java
         CLight::CLight(char *lightLoc)
         {
             strcpy(mLightLocation ,lightLoc);
@@ -93,7 +112,7 @@
 
     - `CCommand.h`
 
-        ```csharp
+        ```java
         class CCommand {
         public:
             CCommand();
@@ -110,18 +129,18 @@
 
     - `CLightOnCommand.h`
 
-        ```csharp
+        ```java
         class CLightOnCommand : public CCommand{
          
-        private:
-            CLight *mLight;
-         
-        public:
-            CLightOnCommand();
-            void Execute();
-            void LightOnCommand(CLight *light);
-            void Undo();
-        };
+            private:
+                CLight *mLight;
+             
+            public:
+                CLightOnCommand();
+                void Execute();
+                void LightOnCommand(CLight *light);
+                void Undo();
+            };
         ```
 
         `Command` 인터페이스를 상속받은 `LightOnCommand`입니다.
@@ -130,7 +149,7 @@
 
     - `CLightOnCommand.cpp`
 
-        ```csharp
+        ```java
         CLightOnCommand::CLightOnCommand()
         {
             strcpy(mCommandName, "Light On Command");
@@ -156,23 +175,22 @@
 
     - `CLightOffCommand.h`
 
-        ```csharp
+        ```java
         class CLightOffCommand : public CCommand{
-         
-        private:
-            CLight *mLight;
-         
-        public:
-            CLightOffCommand();
-            void Execute();
-            void LightOffCommand(CLight *light);
-            void Undo();
+            private:
+                CLight *mLight;
+             
+            public:
+                CLightOffCommand();
+                void Execute();
+                void LightOffCommand(CLight *light);
+                void Undo();
         };
         ```
 
     - `CLightOffCommand.cpp`
 
-        ```csharp
+        ```java
         CLightOffCommand::CLightOffCommand()
         {
             strcpy(mCommandName, "Light Off Command");
@@ -199,26 +217,24 @@
 
     - `CRemoteControl.h`
 
-        ```csharp
+        ```java
         class CRemoteControl {
-         
-        private:
-            int mNumCommand;
-            CCommand** mOnCommand;
-            CCommand** mOffCommand;
-            stack<CCommand *> mCurCmdList;
-         
-        public:
-            CRemoteControl(int numCmd);
-            void PrintCurCommandList();
-            void SetCommand(int slotIdx, CCommand *onCommand, CCommand *offCommand);
-            void OnButtonClicked(int slotIdx);
-            void OffButtonClicked(int slotIdx);
-            void Undo();
-         
-        private:
-            void InitRemoteCtrl();
-         
+            private:
+                int mNumCommand;
+                CCommand** mOnCommand;
+                CCommand** mOffCommand;
+                stack<CCommand *> mCurCmdList;
+             
+            public:
+                CRemoteControl(int numCmd);
+                void PrintCurCommandList();
+                void SetCommand(int slotIdx, CCommand *onCommand, CCommand *offCommand);
+                void OnButtonClicked(int slotIdx);
+                void OffButtonClicked(int slotIdx);
+                void Undo();
+             
+            private:
+                void InitRemoteCtrl();
         };
         ```
 
@@ -230,7 +246,7 @@
 
     - `CRemoteControl.cpp`
 
-        ```csharp
+        ```java
         CRemoteControl::CRemoteControl(int numCmd)
         {
             mOnCommand = (CCommand **)malloc(sizeof(CCommand*) * numCmd);
@@ -307,7 +323,7 @@
 
     - `main.cpp`
 
-        ```csharp
+        ```java
         int main() {
          
             CRemoteControl *remoteCtrl = new CRemoteControl(7);
@@ -411,7 +427,7 @@
         }
         ```
 
-        ```csharp
+        ```java
         public class Client {
         	public static void main(String[] args) {
         	  Lamp lamp = new Lamp();
@@ -429,7 +445,7 @@
             - 새로운 기능으로 변경하려고 `Button` 클래스를 수정해야 하므로 OCP에 위배된다.
             - `Button` 클래스의 `pressed()` 전체를 변경해야 한다.
 
-            ```jsx
+            ```java
             public class Alarm {
               public void start(){ System.out.println("Alarming"); }
             }
@@ -441,7 +457,7 @@
             }
             ```
 
-            ```jsx
+            ```java
             public class Client {
               public static void main(String[] args) {
             		 Alarm alarm = new Alarm();
@@ -455,7 +471,7 @@
 
             > 버튼을 처음 눌렀을 때 램프를 켜고, 두 번째 눌렀을 때는 알람을 동작하게 하려면?
 
-            ```jsx
+            ```java
             enum Mode { LAMP, ALARM };
             // Button 클래스의 코드를 수정
             public class Button {
@@ -501,13 +517,13 @@
 
     - `Command` 인터페이스
 
-        ```jsx
+        ```java
         public interface Command { public abstract void execute(); }
         ```
 
     - `Button` 클래스
 
-        ```jsx
+        ```java
         public class Button {
         	private Command theCommand;
 
@@ -521,7 +537,7 @@
 
     - `Lamp, LampOnCommand` 클래스
 
-        ```jsx
+        ```java
         public class Lamp {
         	public void turnOn(){ System.out.println("Lamp On"); }
         }
@@ -537,7 +553,7 @@
 
     - `Alarm, AlarmStartCommand` 클래스
 
-        ```jsx
+        ```java
         public class Alarm {
         	public void start(){ System.out.println("Alarming"); }
         	}
@@ -553,7 +569,7 @@
 
     - 클라이언트에서의 사용
 
-        ```jsx
+        ```java
         public class Client {
         	public static void main(String[] args) {
         	  Lamp lamp = new Lamp();
