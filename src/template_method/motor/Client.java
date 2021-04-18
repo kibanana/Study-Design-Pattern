@@ -7,6 +7,12 @@ package template_method.motor;
 
 public class Client {
     public static void main(String[] args) {
+        Door door1 = new Door();
+        HyundaiMotor hyundaiMotor = new HyundaiMotor(door1);
+        hyundaiMotor.move(Direction.DOWN);
 
+        Door door2 = new Door();
+        LGMotor lgMotor = new LGMotor(door2);
+        lgMotor.move(Direction.UP);
     }
 }

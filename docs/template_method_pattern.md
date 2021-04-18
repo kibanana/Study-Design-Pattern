@@ -2,6 +2,12 @@
 
 [템플릿 메소드 패턴 (Template Method Pattern)](https://johngrib.github.io/wiki/template-method-pattern/)
 
+[템플릿 메소드 패턴(Template Method Pattern)](https://jdm.kr/blog/116)
+
+[[Design Pattern] 템플릿 메서드 패턴이란](https://gmlwjd9405.github.io/2018/07/13/template-method-pattern.html)
+
+[디자인패턴 - 템플릿 메소드 패턴](https://yaboong.github.io/design-pattern/2018/09/27/template-method-pattern/)
+
 > 알고리즘의 일부 단계를 서브클래스에 정의한다
 
 > 객체의 연산에는 알고리즘의 뼈대만을 정의하고 각 단계에서 수행할 구체적 처리는 서브클래스 쪽으로 미룹니다. 알고리즘의 구조 자체는 그대로 놔둔 채 알고리즘 각 단계 처리를 서브클래스에서 재정의할 수 있게 합니다.
@@ -203,13 +209,76 @@ class OnlineBanking {
 
 ```java
 new OnlineBanking()
-    .processCustomer(1337,
-        (Customer c) -> System.out.println("안녕하세요" + c.getName())
-);
-
+        .processCustomer(1337,
+            (Customer c) -> System.out.println("안녕하세요" + c.getName())
+        );
 ```
 
 ## 인용
 Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음과 같이 불평했다.
 
-> Template Method 패턴은 가능한 절제해 사용해야 한다. 클래스 자체가 전적으로 파생 클래스의 커스터마이징에 의존하는 일종의 '프레임워크'가 되면 이 역시 매우 부서지기 쉽기 때문이다. 기반 클래스는 매우 깨지기 쉽다. 나는 MFC에서 프로그래밍을 할 때, 마이크로소프트가 새로운 버전을 릴리즈할 때마다 전체 애플리케이션을 재작성해야만 했던 악몽을 떨쳐버릴 수가 없다. 종종 코드는 잘 컴파일되지만, 몇몇 기반 클래스의 메소드가 변경되어 프로그램이 제대로 실행되지 않았던 것이다.3
+> Template Method 패턴은 가능한 절제해 사용해야 한다. 클래스 자체가 전적으로 파생 클래스의 커스터마이징에 의존하는 일종의 '프레임워크'가 되면 이 역시 매우 부서지기 쉽기 때문이다. 기반 클래스는 매우 깨지기 쉽다. 나는 MFC에서 프로그래밍을 할 때, 마이크로소프트가 새로운 버전을 릴리즈할 때마다 전체 애플리케이션을 재작성해야만 했던 악몽을 떨쳐버릴 수가 없다. 종종 코드는 잘 컴파일되지만, 몇몇 기반 클래스의 메소드가 변경되어 프로그램이 제대로 실행되지 않았던 것이다.
+
+---
+
+## 훅 메소드(hook method)
+
+`abstract` 키워드를 붙이면 상속받은 클래스는 반드시 해당 메소드를 구현해야 하지만 `abstract` 키워드를 붙이지 않고 훅 메소드로 만들면 반드시 구현할 필요가 없습니다. 상속 받은 클래스에서 선택적으로 오버라이드할 수 있다는 얘기가 됩니다.
+
+## 왜 사용할까요?
+
+템플릿 메소드 패턴은 알고리즘의 뼈대를 맞추기 위해 사용합니다. 즉, 전체적인 레이아웃을 통일시키지만 상속받은 클래스로 하여금 어느정도 유연성을 주도록 하는 디자인 패턴입니다.
+
+추상 메소드(abstract method)와 훅 메소드(hook method)를 적절히 사용해서 전체적인 알고리즘의 뼈대를 유지하되 유연하게 기능을 변경할 수 있도록 하고자 할 때 사용하면 유용할 것입니다.
+
+(예시 - battle 생략)
+
+---
+
+## 템플릿 메서드 패턴이란
+
+- 어떤 작업을 처리하는 일부분을 **서브 클래스로 캡슐화해** 전체 일을 수행하는 구조는 바꾸지 않으면서 특정 단계에서 수행하는 내역을 바꾸는 패턴
+  - 즉, **전체적으로는 동일하면서 부분적으로는 다른 구문으로 구성된 메서드의 코드 중복을 최소화**할 때 유용하다.
+  - 다른 관점에서 보면 동일한 기능을 상위 클래스에서 정의하면서 확장/변화가 필요한 부분만 서브 클래스에서 구현할 수 있도록 한다.
+  - 예를 들어, 전체적인 알고리즘은 상위 클래스에서 구현하면서 다른 부분은 하위 클래스에서 구현할 수 있도록 함으로써 전체적인 알고리즘 코드를 재사용하는 데 유용하도록 한다.
+  - 행위(Behavioral) 패턴의 하나
+  
+    ![templateMethodPattern.png](templateMethodPattern.png)
+- 역할별 수행하는 작업
+  - AbstractClass
+    - 템플릿 메서드를 정의하는 클래스
+    - 하위 클래스의 공통 알고리즘을 정의하고 하위 클래스에서 구현될 기능을 primitive 메서드 또는 hook 메서드로 정의하는 클래스
+  - ConcreteClass
+    - 물려받은 primitive 메서드 또는 hook 메서드를 구현하는 클래스
+    - 상위 클래스에 구현된 템플릿 메서드의 일반적인 알고리즘에서 하위 클래스에 적합하게 primitive 메서드나 hook 메서드를 오버라이드하는 클래스 
+- 참고
+  - 행위(Behavioral) 패턴
+    - 객체나 클래스 사이의 알고리즘이나 책임 분배에 관련된 패턴
+    - 한 객체가 혼자 수행할 수 없는 작업을 여러 개의 객체로 어떻게 분배하는지, 또 그렇게 하면서도 객체 사이의 결합도를 최소화하는 것에 중점을 둔다.
+
+(예시 - motor 생략)
+![img.png](templateMethodPatternFinal.png)
+- `AbstractClass`: Motor 클래스
+- `ConcreteClass`: HyundaiMotor 클래스와 LGMotor 클래스
+- `TemplateMethod`: Motor 클래스의 move 메서드
+- `Primitive / Hook Method`: move 메서드에서 호출되면서 하위 클래스에서 오버라이드될 필요가 있는 moveMotor 메서드
+
+![img.png](templateMethodPatternMotor.png)
+![img.png](templateMethodPatternMotorEnum.png)
+
+LG 모터 추가 시 중복 코드 문제 해결
+![img.png](templateMethodPatternMotorLG.png)
+
+move 메서드 부분 중복 코드 문제 해결
+![img.png](templateMethodPatternMove.png)
+
+---
+
+템플릿 메소드 패턴의 정의로 GoF Design Patterns 의 정의가 가장 깔끔한 것 같다.
+
+> Defines the skeleton of an algorithm in a method, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithms structure. – GoF Design Patterns  
+> 알고리즘의 구조를 메소드에 정의하고, 하위 클래스에서 알고리즘 구조의 변경없이 알고리즘을 재정의 하는 패턴이다. 알고리즘이 단계별로 나누어 지거나, 같은 역할을 하는 메소드이지만 여러곳에서 다른형태로 사용이 필요한 경우 유용한 패턴이다.
+
+토비의 스프링에서는 아래와 같이 정의한다.
+
+> 상속을 통해 슈퍼클래스의 기능을 확장할 때 사용하는 가장 대표적인 방법. 변하지 않는 기능은 슈퍼클래스에 만들어두고 자주 변경되며 확장할 기능은 서브클래스에서 만들도록 한다. – 토비의 스프링 3.1
