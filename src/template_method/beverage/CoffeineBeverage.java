@@ -6,7 +6,9 @@ public abstract class CoffeineBeverage {
         boilWater();
         brew();
         pourInCup();
-        addCondiments();
+        if (customWantsCondiments()) {
+            addCondiments();
+        }
     }
 
     abstract void brew(); // 서브클래스에서 구현
@@ -18,5 +20,9 @@ public abstract class CoffeineBeverage {
 
     void pourInCup() {
         System.out.println("컵에 따르기");
+    }
+
+    boolean customWantsCondiments() {
+        return false;
     }
 }
