@@ -7,7 +7,7 @@ public class Juice { // Product
         Grape
     }
 
-    public JuiceType type = JuiceType.None; // 객체의 표현ㄴ
+    public JuiceType type = JuiceType.None; // 객체의 표현
 
     public void setType(JuiceType type) {
         this.type = type;
