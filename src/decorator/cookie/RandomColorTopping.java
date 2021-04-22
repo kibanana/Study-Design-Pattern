@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomColorTopping extends Topping {
-    public RandomColorTopping(Cookie cookie) {
-        super(cookie);
-        cookie.setName("♥" + randomColor() + "♥ " + cookie.getName());
+    protected CookieInterface cookie;
+
+    public RandomColorTopping(CookieInterface cookie) {
+        this.cookie = cookie;
     }
 
     public enum ColorType {
@@ -32,6 +33,6 @@ public class RandomColorTopping extends Topping {
 
     @Override
     public String getName() {
-        return cookie.getName();
+        return "♥" + randomColor() + "♥ " + cookie.getName();
     }
 }

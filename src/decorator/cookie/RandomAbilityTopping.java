@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomAbilityTopping extends Topping {
-    public RandomAbilityTopping(Cookie cookie) {
-        super(cookie);
-        cookie.setName("★" + randomAbility() + "★ " + cookie.getName());
+    protected CookieInterface cookie;
+
+    public RandomAbilityTopping(CookieInterface cookie) {
+        this.cookie = cookie;
     }
 
     public enum AbilityType {
@@ -28,6 +29,6 @@ public class RandomAbilityTopping extends Topping {
 
     @Override
     public String getName() {
-        return cookie.getName();
+        return "★" + randomAbility() + "★ " + cookie.getName();
     }
 }
