@@ -77,6 +77,8 @@ GoF 책에서는 다음과 같이 패턴의 의도를 밝힌다.
 - `Decorator`가 다른 `Decorator`에 대해 알아야할 필요가 있다면, 데코레이터 패턴의 사용 의도와 어긋나는 작업일 수 있다.
 - 재귀적으로 기능을 갖게 하는 방법 외에도, `Decorator`를 추가할 때마다 얻은 아이템을 List로 관리하는 방법도 있다.
 
+    <https://stackoverflow.com/questions/43565475/using-lists-instead-of-decorator-pattern>
+
 ## 예제
 
 음료와 첨과물 (생략)
@@ -186,3 +188,23 @@ Reader reader = new LineNumberReader(
 - 합성 관계
   - 생성자에서 필드에 대한 객체를 생성하는 경우 전체 객체의 라이프타임과 부분 객체의 라이프 타임은 의존적이다.
   - 즉, 전체 객체가 없어지면 부분 객체도 없어진다.
+    
+## 예시 - 도로 표시 방법 조합하기
+
+![img.png](decoratorPattenr2.png)
+
+- 내비게이션 SW 기능
+    - 기본 기능: 도로를 간단한 선으로 표시하는 기능
+    - 추가 기능: 내비게이션 SW에 따라 도로의 차선을 표시하는 기능
+    
+### 문제점
+
+1. 또 다른 도로 표시 기능을 추가로 구현하는 경우
+    - 기본 도로 표시에 교통량을 표시하고 싶다면?
+    
+    ![img.png](decoratorPattern3.png)
+2. 여러 가지 추가 기능을 조합해야 하는 경우
+
+    ![img.png](decoratorPattern4.png)
+   
+    ![img_1.png](decoratorPattern5.png)

@@ -9,5 +9,10 @@ public class Client {
 
         RoadDisplay roadWithLane = new RoadDisplayWithLane();
         roadWithLane.draw();
+
+        System.out.println("=====");
+
+        RoadDisplay roadWithTraffic = new RoadDisplayWithTraffic();
+        roadWithTraffic.draw();
     }
 }
