@@ -11,7 +11,7 @@ public class TrafficDecorator extends DisplayDecorator {
         drawTraffic(); // 추가적으로 교통량 표시
     }
 
-    public void drawTraffic() {
+    private void drawTraffic() {
         System.out.println("\t교통량 표시");
     }
 }

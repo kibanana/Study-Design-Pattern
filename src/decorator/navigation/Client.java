@@ -8,5 +8,7 @@ public class Client {
         road.draw();
         road = new TrafficDecorator(road);
         road.draw();
+        road = new CrossingDecorator(road);
+        road.draw();
     }
 }

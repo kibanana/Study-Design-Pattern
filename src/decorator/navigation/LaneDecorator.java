@@ -11,7 +11,7 @@ public class LaneDecorator extends DisplayDecorator { // 차선 표시를 추가
         drawLane(); // 추가적으로 차선 표시
     }
 
-    public void drawLane() {
+    private void drawLane() {
         System.out.println("\t차선 표시");
     }
 }
