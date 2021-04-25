@@ -4,6 +4,8 @@
 
 [데코레이터 패턴 (Decorator Pattern)](https://johngrib.github.io/wiki/decorator-pattern/#%EC%96%B4%EB%94%94%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B3%A0-%EC%9E%88%EB%82%98)
 
+[[Design Pattern] 데코레이터 패턴이란](https://gmlwjd9405.github.io/2018/07/09/decorator-pattern.html)
+
 1. 정의
     
    객체를 확장할 때 서브 클래스를 이용해 동적(dynamic)으로 확장한다.
@@ -146,3 +148,41 @@ Reader reader = new LineNumberReader(
   )
 );
 ```
+
+---
+
+## 데코레이터 패턴이란
+
+- **객체의 결합을 통해 기능을 동적으로 유연하게 확장**할 수 있게 해주는 패턴
+
+    - 즉, 기본 기능에 추가할 수 있는 기능의 종류가 많은 경우에 각 추가 기능을 Decorator 클래스로 정의한 후 필요한 Decorator 객체를 조합함으로써 추가 기능의 조합을 설계하는 방식이다.
+    
+    - ex) 기본 도로 표시 기능에 차선 표시, 교통량 표시, 교차로 표시, 단속 카메라 표시의 4가지 추가 기능이 있을 때 추가 기능의 모든 조합은 15가지가 된다.
+    
+        -> 데코레이터 패턴을 이용하여 필요한 추가 기능의 조합을 동적으로 생성할 수 있다.
+    
+    - 구조(Structural) 패턴 중 하나
+    
+        ![img.png](decoratorPattern.png)
+    
+        ![img.png](decoratorPattern1.png)
+    
+    - 기본 기능에 추가할 수 있는 많은 종류의 부가 기능에서 파생되는 다양한 조합을 동적으로 구현할 수 있는 패턴이다.
+    
+    - 역할이 수행하는 작업
+        - `Component`
+          - 기본 기능을 뜻하는 `ConcreteComponent`와 추가 기능을 뜻하는 `Decorator`의 공통 기능을 정의. 즉, 클라이언트는 `Component`를 통해 실제 객체를 사용함
+        - `ConcreteComponent`
+          - 기본 기능을 구현하는 클래스
+        - `Decorator`
+          - 많은 수가 존재하는 구체적인 `Decorator`의 공통 기능을 제공
+        - `ConcreteDecoratorA, ConcreteDecoratorB`
+          - `Decorator`의 하위 클래스로 기본 기능에 추가되는 개별적인 기능을 뜻함 
+          - `ConcreteDecorator` 클래스는 `ConcreteComponent` 객체에 대한 참조가 필요한데, 이는 `Decorator` 클래스에서 `Component` 클래스로의 합성(composition) 관계를 통해 표현됨
+
+- 구조(Structural) 패턴
+    - 클래스나 객체를 조합해 더 큰 구조를 만드는 패턴
+    - 예를 들어 서로 다른 인터페이스를 지닌 2개의 객체를 묶어 단일 인터페이스를 제공하거나 객체들을 서로 묶어 새로운 기능을 제공하는 패턴
+- 합성 관계
+  - 생성자에서 필드에 대한 객체를 생성하는 경우 전체 객체의 라이프타임과 부분 객체의 라이프 타임은 의존적이다.
+  - 즉, 전체 객체가 없어지면 부분 객체도 없어진다.
