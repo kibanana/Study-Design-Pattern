@@ -2,6 +2,8 @@
 
 [프록시 패턴(Proxy Pattern)](https://jdm.kr/blog/235)
 
+[프록시 패턴(proxy pattern) 이란?](https://developside.tistory.com/80)
+
 ## 정의
 실제 기능을 수행하는 객체(Real Object) 대신 가상의 객체(Proxy Object)를 사용해 로직의 흐름을 제어하는 디자인 패턴
 
@@ -284,3 +286,68 @@ public void printAllInformationInCompany(Employee viewer, List<Employee> employe
             .forEach(System.out::println);
 }
 ```
+
+---
+
+> 프록시 패턴은 어떤 객체에 대한 접근을 제어하는 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴입니다.
+
+주로 프록시 패턴은 Real Subject가 원격 시스템에서 돌아가거나, 그 객체의 생성 비용이 많이 들어 **실제 사용 시점에 객체를 생성하거나**, **실제 객체에 대한 접근을 제한 및 제어**해야하는 등의 경우에 사용됩니다.
+
+## 프록시 패턴 UML
+
+![img.png](proxyPattern1.png)
+
+- `Proxy`에는 `Real Subject`에 대한 레퍼런스가 들어있다.
+- `Proxy`와 `Real Subject`는 똑같은 인터페이스(`Subject`)를 구현하기 때문에 `Real Subject` 객체가 들어갈 자리면 어디든지 `Proxy`를 대신 쓸 수 있다.
+- 그래서 클라이언트는 `Proxy`를 `Real Subject`와의 사이에 두고 `Proxy`를 통해 데이터를 주고 받습니다.
+
+## 프록시 패턴 종류
+
+- 원격 프록시(Remote Proxy)
+
+    원격 객체에 대한 접근 제어 가능  
+
+- 가상 프록시(Virtual Proxy)
+  
+    객체의 생성비용이 많이 들어 미리 생성하기 힘든 객체에 대한 접근 및 생성시점 등을 제어함
+
+- 보호 프록시(Protection Proxy)
+  
+    객체에 따른 접근 권한을 제어함
+
+- 방화벽 프록시(Firewall Proxy)
+
+    일련의 네트워크 자원에 대한 접근을 제어함으로써 주 객체를 **나쁜** 클라이언트들로부터 보호하는 역할
+
+- 스마트 레퍼런스 프록시(Smart Reference Proxy)
+  
+    주 객체가 참조될 때마다 추가 행동을 제공함 ex) 객체 참조에 대한 선•후 작업 등
+
+- 캐싱 프록시(Caching Proxy)
+  
+    비용이 많이 드는 작업의 결과를 임시로 저장하고, 추후 여러 클라이언트에 저장된 결과를 실제 작업처리 대신 보여주고 자원을 절약하는 역할을 함
+
+- 동기화 프록시(Synchronization Proxy)
+
+    여러 스레드에서 주 객체에 접근하는 경우에 안전하게 작업을 처리할 수 있게 해준다. 주로 분산 환경에서 일련의 객체에 대한 동기화된 접근을 제어해주는 자바 스페이스에서 쓰임
+
+- 복잡도 숨김 프록시(Complexity Hiding Proxy)
+  
+    복잡한 클래스들의 집합에 대한 접근을 제어하고, 복잡도를 숨김
+
+- 지연 복사 프록시(Copy-On-Write Proxy)
+
+    클라이언트에서 필요로 할 때까지 객체가 복사된느 것을 지연시킴으로써 객체의 복사를 제어한다. '변형된 가상 프록시'라고 할 수 있으며, `Java 5`의 `CopyOnWriteArrayList`에서 쓰임
+
+## 예제 - Head First 책의 보호 프록시 구현 예
+
+- 결혼 정보회사 회원 관련 예제
+- 회원정보 당사자인 경우, 기본정보 사항에 대한 get, set 권한
+- 일반 정보회사 이용자들에게는 get 권한과 해당 회원의 점수를 매길 수 있는 권한
+
+- 이 예제에서는 직접 Proxy 클래스를 작성하는 것이 아니라 자바(`java.lang.reflect`)에서 기본적으로 제공하는 Proxy 인터페이스를 이용해 동적프록시로 구현함
+
+- 실제 프록시 클래스는 실행 중에 생성되기 때문에 동적 프록시(Dynamic Proxy)라고 부름
+
+- UML
+  ![img.png](proxyPattern2.png)
