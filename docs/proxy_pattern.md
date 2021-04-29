@@ -4,6 +4,8 @@
 
 [프록시 패턴(proxy pattern) 이란?](https://developside.tistory.com/80)
 
+[[디자인 패턴 9편] 구조 패턴, 프록시(Proxy)](https://dailyheumsi.tistory.com/201)
+
 ## 정의
 실제 기능을 수행하는 객체(Real Object) 대신 가상의 객체(Proxy Object)를 사용해 로직의 흐름을 제어하는 디자인 패턴
 
@@ -351,3 +353,54 @@ public void printAllInformationInCompany(Employee viewer, List<Employee> employe
 
 - UML
   ![img.png](proxyPattern2.png)
+  
+---
+
+> 프록시 패턴은 프록시 객체를 통해 기본 객체에 접근하는 패턴이다.
+
+## 장단점
+
+### 장점
+1. 기본 객체의 리소스가 무거운 경우, 프록시 객체에서 간단한 처리를 하거나 기본 객체를 캐싱 처리함으로써 부하를 줄일 수 있다.
+2. 기본 객체에 대한 수정 없이 클라이언트에서의 사용, 기본 객체 사이에 일련의 로직을 프록시 객체를 통해 넣을 수 있다.
+3. 프록시는 기본 객체와 요청 사이에 있기 때문에, 일종의 보안 역할도 한다.
+4. 구조나 코드 구현이 간단하다.
+
+### 단점
+1. 프록시 객체가 중간에 끼어있기 때문에 간혹 응답이 느려질 수 있다.
+
+    - 캐싱이 안 되어있는 초기 사용의 경우
+
+## 활용상황
+
+1. 기본 객체가 리소스 집약적인 경우, 자잘한 작업들은 프록시 객체가 처리하게 한다.
+2. 기본 객체에 대해 접근을 제어해야하는 경우, 프록시 객체가 권한에 따라 접근 로직을 다르게 처리한다. 
+
+## 구조
+
+![img.png](proxyPattern3.png)
+
+- Subject
+
+    - Proxy와 Real Subject가 구현해야 하는 인터페이스
+    - 두 객체를 동일하게 다루기 위해 존재함
+
+- Proxy
+
+    - Real Subject와 Client 요청 사이에 존재하는 객체
+    - Subject를 구현함으로써 클라이언트를 Proxy와 Real Object를 사용하는 데에 별 차이를 느끼지 못해야 함
+  
+- Real Subject
+
+    - 실질적으로 요청에 대해 주된 기능을 수행하는 객체
+    - Proxy 객체는 내부적으로 이 객체를 로직에 맞게 사용한다.
+  
+      - 위임
+
+## 구현
+
+<https://limkydev.tistory.com/79>
+
+구조: `Client` -> `Proxy` -> `Real Subject`
+
+생각보다 되게 간단한 패턴이자, 활용 범위가 넓은 패턴
