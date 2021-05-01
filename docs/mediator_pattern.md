@@ -4,6 +4,8 @@
 
 [Mediator 패턴](https://effectiveprogramming.tistory.com/entry/Mediator-%ED%8C%A8%ED%84%B4)
 
+[[디자인 패턴] 중재자 패턴(Mediator Pattern)](https://always-intern.tistory.com/5)
+
 중재자 패턴
 
 ![img.png](images/mediatorPattern.png)
@@ -80,3 +82,34 @@
 이처럼 이벤트 소스와 이벤트 수신자 간의 복잡한 관계를 단순화시킬 수 있다.
 
 ![img.png](images/mediatorPattern7.png)
+
+---
+
+## 개요
+
+- 객체들 간의 상호작용 행위를 정리하여 모은 중재자 객체를 따로 두어 관리하는 디자인 패턴
+
+- 중재자 패턴이 사용되는 경우
+    - 객체들간의 관계가 매우 복잡하여 객체의 재사용이 어려울 경우
+
+- 장점
+    - 관계를 가지고있는 객체를 직접 수정하지 않고도 관계를 수정할 수 있습니다.
+    - 객체들 간의 관계 복잡도, 의존성 및 결합도가 감소합니다.
+
+- 단점
+    - 중재자 패턴 사용 시 중재자 객체에 권한이 집중되어 굉장히 크고 복잡해지므로 설계 및 중재자 객체 수정 시 주의해야 합니다.
+
+## UML
+
+> Diagram
+
+![img.png](images/mediatorPattern8.png)
+
+- `Mediator`
+    - 객체 간의 상호작용을 위한 인터페이스를 정의함
+- `ConcreteMediator`
+    - 중개자의 인터페이스를 구현하여 객체간의 상호작용을 제어함
+- `Colleague`
+    - 다른 객체와의 상호작용을 위한 인터페이스를 정의함
+- `ConcreteColleague`
+    - 객체의 인터페이스를 구현하여 중개자를 통해 다른 객체와 상호작용함
