@@ -6,6 +6,12 @@
 
 [[디자인 패턴] 중재자 패턴(Mediator Pattern)](https://always-intern.tistory.com/5)
 
+[[디자인패턴] Mediator(중재자) : 복잡한 의존 관계와 로직은 캡슐화](https://joycestudios.tistory.com/44)
+
+[중재자(Mediator) 패턴](https://programmingfbf7290.tistory.com/entry/%EC%A4%91%EC%9E%AC%EC%9E%90Mediator-%ED%8C%A8%ED%84%B4)
+
+[[디자인 패턴] 12. 중재자 패턴 ( Mediator Pattern )](https://itchipmunk.tistory.com/372)
+
 중재자 패턴
 
 ![img.png](images/mediatorPattern.png)
@@ -113,3 +119,227 @@
     - 다른 객체와의 상호작용을 위한 인터페이스를 정의함
 - `ConcreteColleague`
     - 객체의 인터페이스를 구현하여 중개자를 통해 다른 객체와 상호작용함
+  
+---
+
+- 복잡한 의존 관계를 줄이고자할 때 유용한 행동 디자인 패턴
+- 모든 클래스 간의 복잡한 로직(상호작용)을 캡슐화하여 하나의 클래스에 위임하여 처리하는 패턴
+- 비슷한 패턴으로 Facade 패턴과 Observer 패턴 등이 있음
+
+- 결론: 커뮤니케이션 하고자 하는 객체가 있을 때 관계가 복잡한 경우 이를 해결하고 커플링(결합)을 약화시키는 패턴
+
+## 구조
+
+미디에이터 패턴을 UML로 도식화
+
+![img.png](images/mediatorPattern9.png)
+
+- `Mediator`
+
+    여러 Component를 중재하는 인터페이스를 가지고 있는 추상 클래스 객체
+
+- `ConcreteMediator`
+  
+    여러 Component 객체를 가지고 있으면서 중재하는 역할을 하는 객체
+
+- `Component`
+
+    Mediator 객체에 의해 관리 및 중재를 받을 기본 클래스 객체
+
+---
+
+> 복붙
+
+프로그램에서 상호작용을 해야 하는 객체들이 서로 복잡하게 관계를 맺고 있을 경우 상호작용에 관련된 행동을 별도 형식으로 정의하여 중재를 맡는 객체를 만드는 패턴이다.
+
+ex) '갑'은 이사를 하고 싶어 집을 부동산에 내놓았다. 그러면 부동산 중개업자는 새로운 사람에게 해당 집을 대신해서 팔아준다. 그 과정에서 '갑'은 집을 사고 싶다는 사람과 어떠한 연관 관계를 갖지 않게 된다. 집을 사고 싶은 사람도 '갑'과 어떠한 관계를 맺지 않아도 된다. 이렇게 부동산 중개업자는 집을 파는 사람과 사는 사람들끼리 불편한 관계를 형성하지 않고 서로 원하는 이사라는 작업을 수행할 수 있게 해준다. 여기서 "커맨드 패턴" 포스트에 게시된 예제를 살펴보자.
+
+```java
+OpenMenuItem(String s, Frame frame){
+   super(s);
+   this.frame = frame;
+}
+
+public SaveMenuItem(String s, Frame frame){
+   super(s);
+   this.frame = frame;
+}
+```
+
+위 코드를 보면 OpenMenuItem과 SaveMenuItem 객체는 Frame 클래스의 객체와 연관되어 있다. 이런 연관 관계는 연관된 클래스의 변화가 발생하면 관계된 다른 클래스의 변화를 가져오게 된다. 즉, 유지보수에 문제가 발생할수 밖에 없다. 또한 메뉴 아이템 클래스들은 메모장 프로젝트에서만 사용될 수 밖에 없는 이식성에 제한이 발생하게 된다. 객체지향 언어를 사용하는 이유 중 하나가 재사용성임에도 그렇게 할 수 없게 된다. 유지보수와 이식성에 문제를 일으키는 객체 간의 연관 관계 즉, 객체 간에 직접적인 메시지를 주고받음으로써 발생하는 문제를 해결하기 위해 이들 사이에 부동산 중개업자와 같은 매개체(Mediator)를 첨가해 해결할 수 있다.
+
+MenuItem 컴포넌트들이 Mediator 클래스와 관계를 갖게끔 하고 UI 컴포넌트들 사이의 메시지 송수신은 Mediator 클래스 내에서 행해진다. 관련 클래스들이 Mediator 클래스 내에서만 연관 관계를 갖게 돼 클래스의 변화에 따른 소스 코드 수정은 Mediator 클래스 내부에 국한되므로 수정을 최소화 할 수 있다. 하지만 Mediator 클래스에 모든 것이 집중되므로 Mediator 클래스의 구현이 복잡해지고 GOD 클래스가 될 수 있는 문제를 내포하고 있다.
+
+Command 패턴과 Mediator 패턴은 이들을 결합하여 응용할 수 있고 특히 GUI를 설계할 때 아주 유용하다. 단, Mediator 클래스를 잘못 구현하면 GOD 클래스가 될 수 있으므로 주의해야 한다.
+
+---
+
+> 복붙
+
+```java
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+//Colleague interface
+interface Command {
+    void execute();
+}
+
+//Abstract Mediator
+interface Mediator {
+    void book();
+    void view();
+    void search();
+    void registerView(BtnView v);
+    void registerSearch(BtnSearch s);
+    void registerBook(BtnBook b);
+    void registerDisplay(LblDisplay d);
+}
+
+//Concrete mediator
+class ParticipantMediator implements Mediator {
+
+    BtnView btnView;
+    BtnSearch btnSearch;
+    BtnBook btnBook;
+    LblDisplay show;
+
+    //....
+    public void registerView(BtnView v) {
+        btnView = v;
+    }
+
+    public void registerSearch(BtnSearch s) {
+        btnSearch = s;
+    }
+
+    public void registerBook(BtnBook b) {
+        btnBook = b;
+    }
+
+    public void registerDisplay(LblDisplay d) {
+        show = d;
+    }
+
+    public void book() {
+        btnBook.setEnabled(false);
+        btnView.setEnabled(true);
+        btnSearch.setEnabled(true);
+        show.setText("booking...");
+    }
+
+    public void view() {
+        btnView.setEnabled(false);
+        btnSearch.setEnabled(true);
+        btnBook.setEnabled(true);
+        show.setText("viewing...");
+    }
+
+    public void search() {
+        btnSearch.setEnabled(false);
+        btnView.setEnabled(true);
+        btnBook.setEnabled(true);
+        show.setText("searching...");
+    }
+
+}
+
+//A concrete colleague
+class BtnView extends JButton implements Command {
+
+    Mediator med;
+
+    BtnView(ActionListener al, Mediator m) {
+        super("View");
+        addActionListener(al);
+        med = m;
+        med.registerView(this);
+    }
+
+    public void execute() {
+        med.view();
+    }
+
+}
+
+//A concrete colleague
+class BtnSearch extends JButton implements Command {
+
+    Mediator med;
+
+    BtnSearch(ActionListener al, Mediator m) {
+        super("Search");
+        addActionListener(al);
+        med = m;
+        med.registerSearch(this);
+    }
+
+    public void execute() {
+        med.search();
+    }
+
+}
+
+//A concrete colleague
+class BtnBook extends JButton implements Command {
+
+    Mediator med;
+
+    BtnBook(ActionListener al, Mediator m) {
+        super("Book");
+        addActionListener(al);
+        med = m;
+        med.registerBook(this);
+    }
+
+    public void execute() {
+        med.book();
+    }
+
+}
+
+class LblDisplay extends JLabel {
+
+    Mediator med;
+
+    LblDisplay(Mediator m) {
+        super("Just start...");
+        med = m;
+        med.registerDisplay(this);
+        setFont(new Font("Arial", Font.BOLD, 24));
+    }
+
+}
+
+class MediatorDemo extends JFrame implements ActionListener {
+
+    Mediator med = new ParticipantMediator();
+
+    MediatorDemo() {
+        JPanel p = new JPanel();
+        p.add(new BtnView(this, med));
+        p.add(new BtnBook(this, med));
+        p.add(new BtnSearch(this, med));
+        getContentPane().add(new LblDisplay(med), "North");
+        getContentPane().add(p, "South");
+        setSize(400, 200);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        Command comd = (Command) ae.getSource();
+        comd.execute();
+    }
+
+    public static void main(String[] args) {
+        new MediatorDemo();
+    }
+
+}
+```
