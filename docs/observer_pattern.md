@@ -248,6 +248,8 @@ GoF 책에서 밝힌 옵저버 패턴의 의도
 
 ### Java Magazine 2016 November/December에 실린 예제
 
+<https://johngrib.github.io/wiki/observer-pattern/#java-magazine-2016-novemberdecember%EC%97%90-%EC%8B%A4%EB%A6%B0-%EC%98%88%EC%A0%9C>
+
 ## 사용예시
 
 - Smalltalk 언어의 Model/View/Controller(MVC) 사용자 인터페이스 프레임워크 
