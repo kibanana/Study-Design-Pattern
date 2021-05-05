@@ -36,3 +36,42 @@
 ## 예시 - 여러가지 방식으로 성적 출력하기
 
 ![img.png](images/observerPattern1.png)
+
+### 문제점
+1. 성적을 다른 형태로 출력하는 경우
+    
+    성적을 목록으로 출력하지 않고 성적의 최소/최대 값만 출력하려면?
+   
+    점수 변경에 대한 통보 대상 클래스가 다른 대상 클래스(DataSheetView -> MinMaxView)로 바뀌면 기존 ScoreRecord 클래스의 내용을 수정(DataSheetView 대신 MinMaxView 저장)해야 하므로 OCP에 위배된다.
+2. 동시 혹은 순차적으로 성적을 출력하는 경우
+    
+    성적이 입력되었을 때 최대 3개 목록, 최대 5개 목록, 최소/최대 값을 동시에 출력하려면?
+   
+    처음에는 목록으로 출력하고 나중에는 최소/최대 값을 출력하려면?
+   
+    점수 변경에 대한 통보 대상 클래스가 다른 대상 클래스(DataSheetView -> MinMaxView)로 바뀌면 기존 ScoreRecord 클래스의 내용을 수정(DataSheetView와 MinMaxView 저장)해야 하므로 OCP에 위배된다.
+
+![img.png](images/observerPattern2.png)
+
+### 해결
+
+문제를 해결하기 위해서는 **공통 기능을 상위 클래스 및 인터페이스로 일반화**하고 이를 활용하여 통보하는 클래스(ScoreRecord 클래스)를 구현해야 한다.
+
+- 즉, ScoreRecord 클래스에서 변화하는 부분을 식별하고 이를 일반화시켜야 한다.
+    - 이를 통해 성적 통보 대상이 변경되더라도 ScoreRecord 클래스를 그대로 재사용할 수 있다.
+- ScoreRecord 클래스에서 하는 작업
+    - 통보 대상인 객체를 참조하는 것을 관리(추가/제거) -> `Subject` 추상클래스로 일반화
+    - 각 통보 대상인 객체의 update 메서드 호출(addScore 메서드) -> `Observer` 인터페이스로 일반화
+    
+![img.png](images/observerPattern3.png)
+
+![img.png](images/observerPattern4.png)
+
+- `Observer`
+  - 추상화된 통보 대상
+- `DataSheetView`, `MinMaxView`
+  - `Observer`를 `implements` 함으로써 구체적인 통보대상이 됨
+- `Subject`
+  - 성적 변경에 관심이 있는 대상 객체들을 관리
+- `ScoreRecord`
+  - `Subject`를 `extends` 함으로써 구체적인 통보 대상을 직접 참조하지 않아도 됨

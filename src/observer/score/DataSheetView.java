@@ -2,7 +2,7 @@ package observer.score;
 
 import java.util.List;
 
-public class DataSheetView {
+public class DataSheetView implements Observer {
     private ScoreRecord scoreRecord;
     private int viewCount;
 
@@ -11,6 +11,7 @@ public class DataSheetView {
         this.viewCount = viewCount;
     }
 
+    @Override
     public void update() {
         List<Integer> record = scoreRecord.getScoreRecord();
         displayScores(record, viewCount);
