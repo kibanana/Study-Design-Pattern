@@ -2,6 +2,8 @@ package strategy.robot;
 
 public abstract class Robot {
     private String name;
+    private AttackStrategy attackStrategy;
+    private MovingStrategy movingStrategy;
 
     public Robot(String name) {
         this.name = name;
@@ -11,6 +13,19 @@ public abstract class Robot {
         return name;
     }
     
-    public abstract void attack();
-    public abstract void move();
+    public void attack() {
+        attackStrategy.attack();
+    };
+
+    public void move() {
+        movingStrategy.move();
+    };
+
+    public void setAttackStrategy(AttackStrategy attackStrategy) {
+        this.attackStrategy = attackStrategy;
+    }
+
+    public void setMovingStrategy(MovingStrategy movingStrategy) {
+        this.movingStrategy = movingStrategy;
+    }
 }
