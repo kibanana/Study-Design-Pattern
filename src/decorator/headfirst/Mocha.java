@@ -1,6 +1,6 @@
 package decorator.headfirst;
 
-public class Mocha extends CondimentDecorator {
+public class Mocha extends CondimentDecorator {  // Concrete Decorator
     Beverage beverage;
 
     public Mocha(Beverage beverage) {

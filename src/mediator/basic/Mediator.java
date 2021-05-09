@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mediator {
-    List<IDestination> list = new ArrayList<IDestination>();
+    List<IDestination> list = new ArrayList<IDestination>(); // 이벤트 수신자를 관리함
 
     public void addDestination(IDestination destination) {
         list.add(destination);

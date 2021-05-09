@@ -9,6 +9,7 @@ public class Client {
 
         // 소스는 setMediator() 메서드를 통해 외부로부터 Mediator 객체를 주입받는다.
         // 그리고 이벤트가 발생하면 Mediator 객체의 onEvent() 메서드를 호출하여 자신에게 발생한 이벤트를 전달하도록 한다.
+//        이벤트 발생자 -> 미디에이터 -> 이벤트 수신자
 
         // IDestination을 구현한 수신자 객체는 생성된 후 Mediator 객체에 자신을 등록한다. 이를 통해 Mediator 객체가 이벤트 발생 시 이벤트를 전달할 수신자를 알 수 있다.
 
@@ -17,11 +18,11 @@ public class Client {
         ISource tcp = new TcpCommunication();
         ISource system = new SystemSignal();
 
-        tcp.setMediator(mediator);
+        tcp.setMediator(mediator); // 생성자에서부터 mediator 넘겨줄 수도 있고 이건 마음대로~
         system.setMediator(mediator);
 
-        mediator.addDestination(new Display());
-        mediator.addDestination(new Log());
+        mediator.addDestination(new Display()); // 이벤트 수신자 추가 1
+        mediator.addDestination(new Log());  // 이벤트 수신자 추가 2
 
         tcp.occurEvent("[TCP]connected");
         tcp.occurEvent("[TCP]send_message");

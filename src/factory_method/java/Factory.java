@@ -6,6 +6,6 @@ abstract public class Factory {
         registerProduct(p);
         return p;
     }
-    protected abstract Product createProduct(String owner);
+    protected abstract Product createProduct(String owner); // 팩토리 메소드
     protected abstract void registerProduct(Product p);
 }

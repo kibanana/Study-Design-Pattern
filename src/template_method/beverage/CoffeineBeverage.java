@@ -6,9 +6,11 @@ public abstract class CoffeineBeverage {
         boilWater();
         brew();
         pourInCup();
-        if (customWantsCondiments()) {
-            addCondiments();
+        if (customWantsCondiments()) { // personWantsOther -> hook operation
+            addCondiments(); // -> prepareOther
         }
+
+        // prepareOther 메서드가 훅 메서드(= 훅 연산, 필요하다면 서브클래스에서 확장할 수 있는 기본적인 행동을 제공하는 메서드)다. 그리고 personWantsOther 메서드는 훅 메서드를 후킹하는 역할만 한다.
     }
 
     abstract void brew(); // 서브클래스에서 구현

@@ -1,6 +1,6 @@
 package mediator.basic;
 
-public class TcpCommunication implements ISource {
+public class TcpCommunication implements ISource { // 이벤트 발생자
     Mediator mediator;
 
     @Override

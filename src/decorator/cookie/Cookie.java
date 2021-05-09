@@ -1,6 +1,6 @@
 package decorator.cookie;
 
-public class Cookie implements CookieInterface {
+public class Cookie implements CookieInterface { // ConcreteComponent
     public String name;
 
     public Cookie(String name) {

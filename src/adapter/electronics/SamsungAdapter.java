@@ -1,7 +1,7 @@
 package adapter.electronics;
 
 public class SamsungAdapter implements JapanElectronics {
-    Samsung samsung;
+    KoreanElectronics samsung;
 
     public SamsungAdapter(Samsung samsung) {
         this.samsung = samsung;

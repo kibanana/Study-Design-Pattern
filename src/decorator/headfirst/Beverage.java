@@ -1,6 +1,6 @@
 package decorator.headfirst;
 
-abstract class Beverage {
+abstract class Beverage { // Component
     String description = "제목 없음";
 
     public String getDescription() {

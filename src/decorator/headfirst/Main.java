@@ -2,11 +2,11 @@ package decorator.headfirst;
 
 public class Main {
     public static void main(String[] args) {
-        Beverage a = new Espresso();
-        a = new FreshCream(a);
+        Beverage a = new Espresso(); // 에스프레소
+        a = new FreshCream(a); // 생크림 + 에스프레소
 
-        Beverage b = new HouseBlend();
-        b = new FreshCream(b);
+        Beverage b = new HouseBlend(); // 하우스 블렌드 커피
+        b = new FreshCream(b); // 생크림 + 하우스 블렌드 커피
 
         Beverage c = new HouseBlend();
         c = new Mocha(c);

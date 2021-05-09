@@ -1,6 +1,6 @@
 package decorator.headfirst;
 
-public class FreshCream extends CondimentDecorator {
+public class FreshCream extends CondimentDecorator { // Concrete Decorator
     Beverage beverage;
 
     public FreshCream(Beverage beverage) {

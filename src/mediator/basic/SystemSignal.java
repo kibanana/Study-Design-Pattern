@@ -1,6 +1,6 @@
 package mediator.basic;
 
-public class SystemSignal implements ISource {
+public class SystemSignal implements ISource { // 이벤트 발생자
     Mediator mediator;
 
     @Override

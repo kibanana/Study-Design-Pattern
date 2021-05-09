@@ -3,7 +3,7 @@ package decorator.cookie;
 import java.util.List;
 import java.util.Random;
 
-public class RandomColorTopping extends Topping {
+public class RandomColorTopping extends Topping { // Concrete Decorator B
     protected CookieInterface cookie;
 
     public RandomColorTopping(CookieInterface cookie) {
@@ -33,6 +33,7 @@ public class RandomColorTopping extends Topping {
 
     @Override
     public String getName() {
+        System.out.println("색상 추가중~");
         return "♥" + randomColor() + "♥ " + cookie.getName();
     }
 }
