@@ -16,7 +16,7 @@ GoF는 다음과 같이 팩토리 메소드 패턴의 의도를 밝힌다.
 
 > 객체를 생성하기 위해 인터페이스를 정의하지만, 어떤 클래스의 인스턴스를 생성할지에 대한 결정은 서브클래스가 내리도록 합니다.
 
-![img.png](factoryMethodPattern.png)
+![img.png](images/factoryMethodPattern.png)
 
 ## 요약
 - 객체 생성을 캡슐화하는 패턴이다.
@@ -65,7 +65,7 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
     - **스트래티지 패턴, 싱글턴 패턴, 템플릿 메서드 패턴**을 사용한다.
     - ‘생성(Creational) 패턴’의 하나 (아래 참고)
 
-![img.png](factoryMethodPattern1.png)
+![img.png](images/factoryMethodPattern1.png)
 
 - 역할이 수행하는 작업
   - Product
@@ -89,7 +89,7 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
     - 객체의 생성과 조합을 캠슐화해 특정 객체가 생성되거나 변경되어도 프로그램 구조에 영향을 크게 받지 않도록 유연성을 제공한다.
   
 ## 예시 - 여러 가지 방식의 엘리베이터 스케줄링 방법 지원하기
-![img.png](factoryMethodPattern2.png)
+![img.png](images/factoryMethodPattern2.png)
 
 - 작업 처리량(Throughput)을 기준으로 한 스케줄링에 따른 엘리베이터 관리
 - 스케줄링: 주어진 요청(목적지 층,방향)을 받았을 때 여러 대의 엘리베이터 중 하나를 선택하는 것을 말한다.
@@ -102,7 +102,7 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
     - 오전에는 대기 시간 최소화 전략을 사용하고, 오후에는 처리량 최대화 전략을 사용해야 한다면?
 
 ### 해결 1
-![img.png](factoryMethodPattern3.png)
+![img.png](images/factoryMethodPattern3.png)
 
 - `requestElevator()` 메서드가 실행될 때마다 현재 시간에 따라 적절한 스케줄링 객체를 생성해야 한다.
 - `ElevatorManager` 클래스의 입장에서는 여러 스케줄링 전략이 있기 때문에 `ElevatorScheduler`라는 인터페이스를 사용하여 여러 전략들을 캡슐화하여 동적으로 선택할 수 있게 한다.
@@ -120,7 +120,7 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
 
 1. 주어진 기능을 실제로 제공하는 적절한 **클래스 생성 작업을 별도의 클래스/메서드로 분리**시켜야 한다.
 
-    ![img.png](factoryMethodPattern4.png)
+    ![img.png](images/factoryMethodPattern4.png)
    
     - 엘리베이터 스케줄링 전략에 일치하는 클래스를 생성하는 코드를 `requestElevator` 메서드에서 분리해 별도의 클래스/메서드를 정의한다.
       - 변경 전: `ElevatorManager` 클래스가 직접 `ThroughputScheduler` 객체와 `ResponseTimeScheduler` 객체를 생성
@@ -129,14 +129,14 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
 
     싱글턴 패턴을 활용한 엘리베이터 스케줄링 전략 설계
    
-    ![img.png](factoryMethodPattern5.png)
+    ![img.png](images/factoryMethodPattern5.png)
 
    - 스케줄링 기능을 제공하는 `ResponseTimeScheduler` 클래스와 `ThroughputScheduler` 클래스는 오직 하나의 객체만 생성해서 사용하도록 한다.
    - 즉, 생성자를 통해 직접 객체를 생성하는 것이 허용되지 않아야 한다.
         - 이를 위해 각 생성자를 `private`으로 정의한다.
         - 대신 `getInstance()` 라는 정적 메서드로 객체 생성을 구현한다.
     
-![img.png](factoryMethodPattern6.png)
+![img.png](images/factoryMethodPattern6.png)
 다음과 같이 객체 생성을 전담하는 별도의 Factory 클래스를 분리하여 객체 생성의 변화에 대비할 수 있다.
 
 이 방법은 스트래티지 패턴과 싱글턴 패턴을 이용하여 팩토리 메서드 패턴을 적용한다.
@@ -149,7 +149,7 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
     - 하위 클래스에서 적합한 클래스의 객체를 생성하여 객체의 생성 코드를 분리한다.
     - 이 방법은 스트래티지 패턴, 싱글턴 패턴, 템플릿 메서드 패턴을 이용하여 팩토리 메서드 패턴을 적용한다.
 
-    ![img.png](factoryMethodPattern7.png)
+    ![img.png](images/factoryMethodPattern7.png)
 
 - 팩토리 메서드
     - `ElevatorManager` 클래스의 `getScheduler()` 메서드
@@ -164,7 +164,7 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
 
 - 즉, 팩토리 메서드를 호출하는 상위 클래스의 메서드는 템플릿 메서드가 된다.
 
-![img.png](factoryMethodPattern8.png)
+![img.png](images/factoryMethodPattern8.png)
 
 - `Product`: `ElevatorScheduler` 인터페이스 
 - `ConcreteProduct`: `ThroughputScheduler` 클래스와 `ResponseTimeScheduler` 클래스

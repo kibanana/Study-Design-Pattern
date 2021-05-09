@@ -229,6 +229,8 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
 
 `abstract` 키워드를 붙이면 상속받은 클래스는 반드시 해당 메소드를 구현해야 하지만 `abstract` 키워드를 붙이지 않고 훅 메소드로 만들면 반드시 구현할 필요가 없습니다. 상속 받은 클래스에서 선택적으로 오버라이드할 수 있다는 얘기가 됩니다.
 
+> abstract 키워드를 붙이지 않고 훅 메소드를 만들면 반드시 구현할 필요가 없다. 그러므로 서브 클래스에서 구현해야 하는 부담이 적어진다.
+
 ## 왜 사용할까요?
 
 템플릿 메소드 패턴은 알고리즘의 뼈대를 맞추기 위해 사용합니다. 즉, 전체적인 레이아웃을 통일시키지만 상속받은 클래스로 하여금 어느정도 유연성을 주도록 하는 디자인 패턴입니다.
@@ -247,7 +249,7 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
   - 예를 들어, 전체적인 알고리즘은 상위 클래스에서 구현하면서 다른 부분은 하위 클래스에서 구현할 수 있도록 함으로써 전체적인 알고리즘 코드를 재사용하는 데 유용하도록 한다.
   - 행위(Behavioral) 패턴의 하나
   
-    ![templateMethodPattern.png](templateMethodPattern.png)
+    ![templateMethodPattern.png](images/templateMethodPattern.png)
 - 역할별 수행하는 작업
   - AbstractClass
     - 템플릿 메서드를 정의하는 클래스
@@ -261,20 +263,20 @@ Allen Holub은 "실용주의 디자인 패턴"에서 이 패턴에 대해 다음
     - 한 객체가 혼자 수행할 수 없는 작업을 여러 개의 객체로 어떻게 분배하는지, 또 그렇게 하면서도 객체 사이의 결합도를 최소화하는 것에 중점을 둔다.
 
 (예시 - motor 생략)
-![img.png](templateMethodPatternFinal.png)
+![img.png](images/templateMethodPatternFinal.png)
 - `AbstractClass`: Motor 클래스
 - `ConcreteClass`: HyundaiMotor 클래스와 LGMotor 클래스
 - `TemplateMethod`: Motor 클래스의 move 메서드
 - `Primitive / Hook Method`: move 메서드에서 호출되면서 하위 클래스에서 오버라이드될 필요가 있는 moveMotor 메서드
 
-![img.png](templateMethodPatternMotor.png)
-![img.png](templateMethodPatternMotorEnum.png)
+![img.png](images/templateMethodPatternMotor.png)
+![img.png](images/templateMethodPatternMotorEnum.png)
 
 LG 모터 추가 시 중복 코드 문제 해결
-![img.png](templateMethodPatternMotorLG.png)
+![img.png](images/templateMethodPatternMotorLG.png)
 
 move 메서드 부분 중복 코드 문제 해결
-![img.png](templateMethodPatternMove.png)
+![img.png](images/templateMethodPatternMove.png)
 
 ---
 

@@ -20,7 +20,7 @@
 
 ## 클래스 다이어그램
 
-![img.png](proxyPattern.png)
+![img.png](images/proxyPattern.png)
 
 - Client는 Subject(interface)를 사용한다.
 - Real Object, Proxy Object는 Subject(interface)를 구현한다.
@@ -301,7 +301,7 @@ public void printAllInformationInCompany(Employee viewer, List<Employee> employe
 
 ## 프록시 패턴 UML
 
-![img.png](proxyPattern1.png)
+![img.png](images/proxyPattern1.png)
 
 - `Proxy`에는 `Real Subject`에 대한 레퍼런스가 들어있다.
 - `Proxy`와 `Real Subject`는 똑같은 인터페이스(`Subject`)를 구현하기 때문에 `Real Subject` 객체가 들어갈 자리면 어디든지 `Proxy`를 대신 쓸 수 있다.
@@ -356,7 +356,7 @@ public void printAllInformationInCompany(Employee viewer, List<Employee> employe
 - 실제 프록시 클래스는 실행 중에 생성되기 때문에 동적 프록시(Dynamic Proxy)라고 부름
 
 - UML
-  ![img.png](proxyPattern2.png)
+  ![img.png](images/proxyPattern2.png)
   
 ---
 
@@ -382,7 +382,7 @@ public void printAllInformationInCompany(Employee viewer, List<Employee> employe
 
 ## 구조
 
-![img.png](proxyPattern3.png)
+![img.png](images/proxyPattern3.png)
 
 - Subject
 
@@ -426,7 +426,7 @@ Proxy(프록시)는 우리말로 **대리자, 대변인**이라는 뜻이다. �
 
 ## 프록시 패턴의 구조
 
-![img.png](proxyPattern4.png)
+![img.png](images/proxyPattern4.png)
 
 -> 클라이언트가 요청(`Real Subject`의 `request()` 메서드 호출)하면, 프록시가 대신 `Real Subject`의 `request()` 메서드를 호출하고 그 반환값을 클라이언트에게 전달한다.
 
@@ -466,7 +466,7 @@ Client -> Proxy -> Real Subject
 
 ## 구조
 
-![img.png](proxyPattern5.png)
+![img.png](images/proxyPattern5.png)
     
 - 프록시 클래스는 주체 클래스를 감싸면서 클라이언트의 요청을 주체 클래스에게 위임하거나 리다이렉트한다.
 - 프록시 클래스는 주체 클래스의 경량화된 버전으로 사용되기 때문에 항상 모든 요청을 위임하는 것은 아니고, 보다 실질적인 (or 독립적인) 요청들을 주체 클래스에 위임하는 것이다.
@@ -476,4 +476,4 @@ Client -> Proxy -> Real Subject
 
 (커머스 - 주문&재고 예제 생략)
 
-![img.png](proxyPattern6.png)
+![img.png](images/proxyPattern6.png)
