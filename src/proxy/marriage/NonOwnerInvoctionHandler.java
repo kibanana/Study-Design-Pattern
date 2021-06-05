@@ -29,7 +29,7 @@ public class NonOwnerInvoctionHandler implements InvocationHandler {
                         ", interest='" + person.getInterest() + '\'' +
                         ", rating=" + person.getHotOrNotRating() +
                         '}');
-            }
+            } // 권한 체크 -> 보호 프록시
             else {
                 System.out.println("IllegalAccessException");
                 return new IllegalAccessException();

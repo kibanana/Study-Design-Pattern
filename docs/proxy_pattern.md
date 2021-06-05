@@ -43,7 +43,7 @@ interface TextFile {
 }
 ```
 
-메서드가 하나밖에 없는 아주 간단한 인터페이스이며, 앞으로 이 인터펯이스를 구현하는 클래스는 반드시 `fetch()` 메서드를 구현해야 합니다.
+메서드가 하나밖에 없는 아주 간단한 인터페이스이며, 앞으로 이 인터페이스를 구현하는 클래스는 반드시 `fetch()` 메서드를 구현해야 합니다.
 
 이제부터 시나리오를 가정합시다.
 
@@ -343,7 +343,7 @@ public void printAllInformationInCompany(Employee viewer, List<Employee> employe
 
 - 지연 복사 프록시(Copy-On-Write Proxy)
 
-    클라이언트에서 필요로 할 때까지 객체가 복사된느 것을 지연시킴으로써 객체의 복사를 제어한다. '변형된 가상 프록시'라고 할 수 있으며, `Java 5`의 `CopyOnWriteArrayList`에서 쓰임
+    클라이언트에서 필요로 할 때까지 객체가 복사되는 것을 지연시킴으로써 객체의 복사를 제어한다. '변형된 가상 프록시'라고 할 수 있으며, `Java 5`의 `CopyOnWriteArrayList`에서 쓰임
 
 ## 예제 - Head First 책의 보호 프록시 구현 예
 
